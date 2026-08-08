@@ -19,10 +19,14 @@ program
 
 program
   .command("move")
-  // .description("Add name")
-  .argument("<name> <id> <status>")
-  .action((name) => {
-    console.log(`Hello ${name ?? "world"}`);
+  .description("Add id and status")
+  .argument("<task>")
+  .argument("<id>")
+  .argument("<status>")
+  .action((task, id, status) => {
+    console.log(task);
+    console.log(id);
+    console.log(status);
   });
 
 program.parse();
