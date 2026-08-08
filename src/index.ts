@@ -8,11 +8,21 @@ program
   .version("1.0.0");
 
 program
-  .command("split")
-  .description("Add the task in the  InMemory")
-  .option("--add", "Add task")
-  .option("--remove", "remove the task")
-  .action((str, option) => {
-    console.log();
+  .command("add")
+  .description("Add a new task")
+  .argument("<task>")
+  // .argument("[message]")
+  .action((task) => {
+    console.log(task);
+    // console.log(message);
   });
+
+program
+  .command("move")
+  // .description("Add name")
+  .argument("<name> <id> <status>")
+  .action((name) => {
+    console.log(`Hello ${name ?? "world"}`);
+  });
+
 program.parse();
