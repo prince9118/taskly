@@ -1,18 +1,22 @@
-import type { Task, TaskPriority } from "../types/task.js";
+import { type TaskType, type TaskPriority, TaskSchema } from "../types/task.js";
 import { getTasks, saveTasks } from "../storage/task.storage.js";
 
 export async function createTask(
   title: string,
   priority: TaskPriority
-): Promise<Task> {
+): Promise<TaskType> {
   const tasks = await getTasks();
-  const task: Task = {
-    id: tasks.length + 1,
+  const task: TaskType = {
+    id: tasks.length,
     title,
     completed: false,
     priority
   };
-  tasks.push(task);
-  await saveTasks(tasks);
-  return task;
+  const parse = TaskSchema.safeParse(task);
+  if (parse.success) {
+    tasks.push(task);
+    await saveTasks(tasks);
+    return task;
+  }
+  throw new Error("Task data is incorrect");
 }
