@@ -1,8 +1,8 @@
 [
   {
     "id": 0,
-    "title": "Learn Redis",
-    "completed": false,
+    "title": "Learn npm",
+    "completed": true,
     "priority": "high"
   },
   {
@@ -12,9 +12,9 @@
     "priority": "high"
   },
   {
-    "id": 2,
-    "title": "Learn redis",
-    "completed": true,
+    "id": 4,
+    "title": "learn ts",
+    "completed": false,
     "priority": "high"
   }
 ]
