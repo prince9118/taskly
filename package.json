@@ -11,8 +11,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^7.9.1",
     "commander": "^15.0.0",
     "inquirer": "^14.0.2",
+    "prisma": "^7.9.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {

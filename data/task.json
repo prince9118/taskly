@@ -8,7 +8,7 @@
   {
     "id": 3,
     "title": "Learn new sciene",
-    "completed": true,
+    "completed": false,
     "priority": "high"
   },
   {

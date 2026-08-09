@@ -55,7 +55,7 @@ program
   .description("Mark task as completed")
   .action(async () => {
     try {
-      const tasks = await getAllTasks();
+      const tasks = (await getAllTasks()).filter((task) => !task.completed);
       if (!tasks) {
         throw new Error("No task found");
       }
@@ -140,4 +140,5 @@ program
     console.log("Task updated successfully");
     console.log(updatedTask);
   });
-program.parse();
+
+  program.parse();
