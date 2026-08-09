@@ -1,22 +1,29 @@
-import { type TaskType, type TaskPriority, TaskSchema } from "../types/task.js";
+import {
+  type TaskType,
+  type CreateTaskInput,
+  type TaskPriority,
+  TaskSchema
+} from "../types/task.js";
 import { getTasks, saveTasks } from "../storage/task.storage.js";
+import { title } from "node:process";
 
-export async function createTask(
-  title: string,
-  priority: TaskPriority
-): Promise<TaskType> {
+export async function createTask(input: CreateTaskInput): Promise<TaskType> {
   const tasks = await getTasks();
-  const task: TaskType = {
-    id: tasks.length,
-    title,
-    completed: false,
-    priority
-  };
-  const parse = TaskSchema.safeParse(task);
-  if (parse.success) {
-    tasks.push(task);
-    await saveTasks(tasks);
-    return task;
+  const taskExists = tasks.some((task) => task.title === input.title);
+  if (taskExists) {
+    throw new Error("Task already exists");
   }
-  throw new Error("Task data is incorrect");
+  const newTask = {
+    id: tasks.length,
+    title: input.title,
+    completed: false,
+    priority: input.priority
+  };
+  const parse = TaskSchema.safeParse(newTask);
+  if (!parse.success) {
+    throw new Error("Task data is incorrect");
+  }
+  tasks.push(parse.data);
+  await saveTasks(tasks);
+  return parse.data;
 }

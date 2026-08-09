@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import { createTask } from "./services/task.service.js";
 import { getTasks } from "./storage/task.storage.js";
-
+import inquirer from "inquirer";
 const program = new Command();
 
 program.name("taskly").description("cli task manager").version("1.0.0");
@@ -9,14 +9,44 @@ program.name("taskly").description("cli task manager").version("1.0.0");
 program
   .command("add")
   .description("Add a new task")
-  .argument("<task>")
-  .option("--p, --priority <level>", "Task priority")
   .action(async (task, options) => {
-    // console.log(await getTasks());
-
-    const createdTask = await createTask(task, options.priority ?? "medium");
+    // const tasks = await getTasks();
+    // console.table(tasks);
+    // const createdTask = await createTask(task, options.priority ?? "medium");
     // console.log("Task created");
     // console.log(createdTask);
+    const answers = await inquirer.prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "what is your task?"
+      },
+      {
+        type: "select",
+        name: "priority",
+        message: "Select priority",
+        choices: ["low", "medium", "high"]
+      }
+    ]);
+    const createdTask = await createTask(answers);
+  });
+program
+  .command("get")
+  .description("Get all the tasks")
+  .action(async (task, options) => {
+    const answers = await inquirer.prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "what is your task?"
+      },
+      {
+        type: "select",
+        name: "priority",
+        message: "Select priority",
+        choices: ["low", "medium", "high"]
+      }
+    ]);
   });
 
 program.parse();

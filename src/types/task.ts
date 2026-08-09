@@ -15,6 +15,11 @@ export const TaskSchema = z.object({
   completed: z.boolean().default(false),
   priority: TaskPrioritySchema
 });
+
+export type CreateTaskInput = {
+  title: string;
+  priority: TaskPriority;
+};
 export const fileSchema = z.array(TaskSchema);
 
 export type TaskType = z.infer<typeof TaskSchema>;

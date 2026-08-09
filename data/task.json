@@ -1,31 +1,7 @@
 [
   {
     "id": 0,
-    "title": "Something",
-    "completed": false,
-    "priority": "medium"
-  },
-  {
-    "id": 1,
-    "title": "Something",
-    "completed": false,
-    "priority": "medium"
-  },
-  {
-    "id": 2,
-    "title": "Something",
-    "completed": false,
-    "priority": "medium"
-  },
-  {
-    "id": 3,
-    "title": "Something",
-    "completed": false,
-    "priority": "medium"
-  },
-  {
-    "id": 4,
-    "title": "Something",
+    "title": "Learn Redis",
     "completed": false,
     "priority": "high"
   }
