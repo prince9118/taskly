@@ -6,15 +6,15 @@
     "priority": "high"
   },
   {
-    "id": 1,
-    "title": "Learn Ws",
+    "id": 3,
+    "title": "Learn new sciene",
     "completed": false,
-    "priority": "low"
+    "priority": "high"
   },
   {
     "id": 2,
-    "title": "learn frontend",
+    "title": "Learn redis",
     "completed": false,
-    "priority": "medium"
+    "priority": "high"
   }
 ]

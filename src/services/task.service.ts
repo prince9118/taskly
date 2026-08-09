@@ -13,8 +13,10 @@ export async function createTask(input: CreateTaskInput): Promise<TaskType> {
   if (taskExists) {
     throw new Error("Task already exists");
   }
+  const nextId =
+    tasks.length === 0 ? 1 : Math.max(...tasks.map((task) => task.id)) + 1;
   const newTask = {
-    id: tasks.length,
+    id: nextId,
     title: input.title,
     completed: false,
     priority: input.priority
