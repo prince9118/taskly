@@ -1,6 +1,10 @@
 import { Command } from "commander";
 import { formatTask } from "./utils/task.formattter.js";
-import { createTask, getAllTasks } from "./services/task.service.js";
+import {
+  createTask,
+  getAllTasks,
+  completeTask
+} from "./services/task.service.js";
 import { getTasks } from "./storage/task.storage.js";
 import inquirer from "inquirer";
 const program = new Command();
@@ -59,6 +63,19 @@ program
     console.log("ID Status Priority Task");
     for (const task of tasks) {
       console.log(formatTask(task));
+    }
+  });
+
+program
+  .command("done")
+  .description("Mark task as completed")
+  .argument("<id>", "Task Id")
+  .action(async (id) => {
+    try {
+      const task = await completeTask(Number(id));
+      console.log(`Task ${task.id} marked as completed`);
+    } catch (error) {
+      throw new Error("Faild to  complete task");
     }
   });
 

@@ -17,7 +17,7 @@ export async function getTasks(): Promise<TaskType[]> {
     // return JSON.parse(data).safeParse(fileSchema) as TaskType[];
   } catch (error) {
     console.log("failed to read tasks", error);
-    return [];``
+    return [];
   }
 }
 

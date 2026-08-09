@@ -33,3 +33,15 @@ export async function createTask(input: CreateTaskInput): Promise<TaskType> {
 export async function getAllTasks(): Promise<TaskType[]> {
   return getTasks();
 }
+
+export async function completeTask(id: number): Promise<TaskType> {
+  const tasks = await getTasks();
+  const task = tasks.find((task) => task.id === id);
+  if (!task) {
+    throw new Error(`Task with id ${id} not found`);
+  }
+
+  task.completed = true;
+  await saveTasks(tasks);
+  return task;
+}
