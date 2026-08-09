@@ -7,6 +7,7 @@ import {
 } from "./services/task.service.js";
 import { getTasks } from "./storage/task.storage.js";
 import inquirer from "inquirer";
+import { parseTaskId } from "./utils/parse.js";
 const program = new Command();
 
 program.name("taskly").description("cli task manager").version("1.0.0");
@@ -72,7 +73,8 @@ program
   .argument("<id>", "Task Id")
   .action(async (id) => {
     try {
-      const task = await completeTask(Number(id));
+      const taskId = parseTaskId(id);
+      const task = await completeTask(taskId);
       console.log(`Task ${task.id} marked as completed`);
     } catch (error) {
       throw new Error("Faild to  complete task");

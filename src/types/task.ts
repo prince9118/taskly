@@ -23,3 +23,5 @@ export type CreateTaskInput = {
 export const fileSchema = z.array(TaskSchema);
 
 export type TaskType = z.infer<typeof TaskSchema>;
+
+export const taskIdSchema = z.number().int().positive();
