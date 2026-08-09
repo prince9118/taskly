@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { createTask } from "./services/task.service.js";
+import { createTask, getAllTasks } from "./services/task.service.js";
 import { getTasks } from "./storage/task.storage.js";
 import inquirer from "inquirer";
 const program = new Command();
@@ -30,6 +30,7 @@ program
     ]);
     const createdTask = await createTask(answers);
   });
+
 program
   .command("get")
   .description("Get all the tasks")
@@ -47,6 +48,14 @@ program
         choices: ["low", "medium", "high"]
       }
     ]);
+  });
+
+program
+  .command("list")
+  .description("List all tasks")
+  .action(async () => {
+    const tasks = await getAllTasks();
+    console.log(tasks);
   });
 
 program.parse();

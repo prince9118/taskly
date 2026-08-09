@@ -4,5 +4,17 @@
     "title": "Learn Redis",
     "completed": false,
     "priority": "high"
+  },
+  {
+    "id": 1,
+    "title": "Learn Ws",
+    "completed": false,
+    "priority": "low"
+  },
+  {
+    "id": 2,
+    "title": "learn frontend",
+    "completed": false,
+    "priority": "medium"
   }
 ]

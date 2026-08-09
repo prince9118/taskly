@@ -27,3 +27,7 @@ export async function createTask(input: CreateTaskInput): Promise<TaskType> {
   await saveTasks(tasks);
   return parse.data;
 }
+
+export async function getAllTasks(): Promise<TaskType[]> {
+  return getTasks();
+}
