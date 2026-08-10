@@ -6,7 +6,7 @@ export async function createTask(req: Request, res: Response) {
     const { title, priority } = req.body;
     const task = await taskService.createTask(title, priority);
     return res.status(201).json({
-      task
+      task,
     });
   } catch (error) {
     console.log(error);
@@ -21,20 +21,28 @@ export async function taskList(req: Request, res: Response) {
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      message: "Failed to fetch tasks"
+      message: "Failed to fetch tasks",
     });
   }
 }
 
 export async function updateTask(req: Request, res: Response) {
   try {
+    console.log("PARAMS:", req.params);
+    console.log("BODY:", req.body);
+
     const id = Number(req.params.id);
+
+    console.log("ID:", id);
+
     const updatedTask = await taskService.updateTask(id, req.body);
-    return res.status(201).json(updatedTask);
+
+    return res.status(200).json(updatedTask);
   } catch (error) {
-    console.log(error);
+    console.log("UPDATE ERROR:", error);
+
     return res.status(500).json({
-      message: "Failed to update task"
+      message: "Failed to update task",
     });
   }
 }

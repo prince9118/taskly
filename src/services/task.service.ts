@@ -2,7 +2,7 @@ import {
   type TaskType,
   type CreateTaskInput,
   type TaskPriority,
-  TaskSchema
+  TaskSchema,
 } from "../types/task.js";
 import { getTasks, saveTasks } from "../storage/task.storage.js";
 import * as taskRepository from "../respositories/task.repositories.js";
@@ -10,7 +10,7 @@ import prisma from "../db/prisma.js";
 
 export async function createTask(
   title: string,
-  priority: TaskPriority
+  priority: TaskPriority,
 ): Promise<TaskType> {
   const taskExist = await taskRepository.findByTitle(title);
   if (taskExist) {
@@ -49,19 +49,18 @@ export async function removeTask(id: number): Promise<TaskType> {
   return deletedTask;
 }
 
+export async function getAllTasks() {
+  return await taskRepository.findAllTasks();
+}
+
 export async function updateTask(
   id: number,
   data: {
-    title?: string;
-    completed?: boolean;
-    priority?: TaskPriority;
-  }
-): Promise<TaskType> {
-  return prisma.task.update({
-    wher
-  });
-}
-
-export async function getAllTasks() {
-  return await taskRepository.findAllTasks();
+    title: string;
+    completed: boolean;
+    priority: TaskPriority;
+  },
+) {
+  const updateTask = await taskRepository.updateTask(id, data);
+  return updateTask;
 }
