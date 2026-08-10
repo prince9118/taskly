@@ -5,29 +5,15 @@ import {
   TaskSchema
 } from "../types/task.js";
 import { getTasks, saveTasks } from "../storage/task.storage.js";
-import { title } from "node:process";
+import * as taskRepository from "../respositories/task.repositories.js";
 
 export async function createTask(input: CreateTaskInput): Promise<TaskType> {
-  const tasks = await getTasks();
-  const taskExists = tasks.some((task) => task.title === input.title);
-  if (taskExists) {
-    throw new Error("Task already exists");
+  const taskExist = await taskRepository.findByTitle(input.title);
+  if (taskExist) {
+    throw new Error("Task already exist");
   }
-  const nextId =
-    tasks.length === 0 ? 1 : Math.max(...tasks.map((task) => task.id)) + 1;
-  const newTask = {
-    id: nextId,
-    title: input.title,
-    completed: false,
-    priority: input.priority
-  };
-  const parse = TaskSchema.safeParse(newTask);
-  if (!parse.success) {
-    throw new Error("Task data is incorrect");
-  }
-  tasks.push(parse.data);
-  await saveTasks(tasks);
-  return parse.data;
+  const task = await taskRepository.createTask(input);
+  return task;
 }
 
 export async function getAllTasks(): Promise<TaskType[]> {
@@ -59,22 +45,22 @@ export async function removeTask(id: number): Promise<TaskType> {
   return deletedTask;
 }
 
-export async function updateTask(id:number,
-    updates:{
-        title:string;
-        completed:boolean;
-        priority:TaskPriority;
-
-    }):Promise<TaskType>{
-        const tasks=await getTasks();
-        const task=tasks.find((task)=>task.id === id);
-        if(!task){
-            throw new Error(`Task with id ${id} not found`);
-        }
-        task.title=updates.title;
-        task.completed=updates.completed;
-        task.priority=updates.priority;
-        await saveTasks(tasks);
-        return task;
-
-    }
+export async function updateTask(
+  id: number,
+  updates: {
+    title: string;
+    completed: boolean;
+    priority: TaskPriority;
+  }
+): Promise<TaskType> {
+  const tasks = await getTasks();
+  const task = tasks.find((task) => task.id === id);
+  if (!task) {
+    throw new Error(`Task with id ${id} not found`);
+  }
+  task.title = updates.title;
+  task.completed = updates.completed;
+  task.priority = updates.priority;
+  await saveTasks(tasks);
+  return task;
+}

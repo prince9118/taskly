@@ -7,16 +7,21 @@
 // }
 import z from "zod";
 
-export const TaskPrioritySchema = z.enum(["low", "medium", "high"]);
+export const TaskPrioritySchema = z.enum(["LOW", "MEDIUM", "HIGH"]);
 export type TaskPriority = z.infer<typeof TaskPrioritySchema>;
 export const TaskSchema = z.object({
   id: z.number(),
   title: z.string(),
-  completed: z.boolean().default(false),
+  completed: z.boolean(),
   priority: TaskPrioritySchema,
-  deletedAt: z.date().optional()
-});
 
+  isDeleted: z.boolean(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+
+  deletedAt: z.date().nullable(),
+  completedAt: z.date().nullable()
+});
 export type CreateTaskInput = {
   title: string;
   priority: TaskPriority;

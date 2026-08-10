@@ -18,11 +18,6 @@ program
   .command("add")
   .description("Add a new task")
   .action(async (task, options) => {
-    // const tasks = await getTasks();
-    // console.table(tasks);
-    // const createdTask = await createTask(task, options.priority ?? "medium");
-    // console.log("Task created");
-    // console.log(createdTask);
     const answers = await inquirer.prompt([
       {
         type: "input",
@@ -33,10 +28,11 @@ program
         type: "select",
         name: "priority",
         message: "Select priority",
-        choices: ["low", "medium", "high"]
+        choices: ["LOW", "MEDIUM", "HIGH"]
       }
     ]);
     const createdTask = await createTask(answers);
+    console.log(createdTask);
   });
 
 program
@@ -141,4 +137,4 @@ program
     console.log(updatedTask);
   });
 
-  program.parse();
+program.parse();
