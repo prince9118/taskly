@@ -6,19 +6,23 @@ import {
 } from "../types/task.js";
 import { getTasks, saveTasks } from "../storage/task.storage.js";
 import * as taskRepository from "../respositories/task.repositories.js";
+import prisma from "../db/prisma.js";
 
-export async function createTask(input: CreateTaskInput): Promise<TaskType> {
-  const taskExist = await taskRepository.findByTitle(input.title);
+export async function createTask(
+  title: string,
+  priority: TaskPriority
+): Promise<TaskType> {
+  const taskExist = await taskRepository.findByTitle(title);
   if (taskExist) {
     throw new Error("Task already exist");
   }
-  const task = await taskRepository.createTask(input);
+  const task = await taskRepository.createTask(title, priority);
   return task;
 }
 
-export async function getAllTasks(): Promise<TaskType[]> {
-  return getTasks();
-}
+// export async function getAllTasks(): Promise<TaskType[]> {
+//   return getTasks();
+// }
 
 export async function completeTask(id: number): Promise<TaskType> {
   const tasks = await getTasks();
@@ -47,20 +51,17 @@ export async function removeTask(id: number): Promise<TaskType> {
 
 export async function updateTask(
   id: number,
-  updates: {
-    title: string;
-    completed: boolean;
-    priority: TaskPriority;
+  data: {
+    title?: string;
+    completed?: boolean;
+    priority?: TaskPriority;
   }
 ): Promise<TaskType> {
-  const tasks = await getTasks();
-  const task = tasks.find((task) => task.id === id);
-  if (!task) {
-    throw new Error(`Task with id ${id} not found`);
-  }
-  task.title = updates.title;
-  task.completed = updates.completed;
-  task.priority = updates.priority;
-  await saveTasks(tasks);
-  return task;
+  return prisma.task.update({
+    wher
+  });
+}
+
+export async function getAllTasks() {
+  return await taskRepository.findAllTasks();
 }

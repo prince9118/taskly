@@ -31,7 +31,7 @@ program
         choices: ["LOW", "MEDIUM", "HIGH"]
       }
     ]);
-    const createdTask = await createTask(answers);
+    const createdTask = await createTask(answers.title, answers.priority);
     console.log(createdTask);
   });
 

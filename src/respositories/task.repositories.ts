@@ -1,11 +1,14 @@
 import prisma from "../db/prisma.js";
 import type { TaskType, TaskPriority, CreateTaskInput } from "../types/task.js";
 
-export async function createTask(input: CreateTaskInput): Promise<TaskType> {
+export async function createTask(
+  title: string,
+  priority: TaskPriority
+): Promise<TaskType> {
   return prisma.task.create({
     data: {
-      title: input.title,
-      priority: input.priority
+      title: title,
+      priority: priority
     }
   });
 }
@@ -15,6 +18,14 @@ export async function findByTitle(title: string) {
     where: {
       title,
       isDeleted: false
+    }
+  });
+}
+
+export async function findAllTasks() {
+  return await prisma.task.findMany({
+    orderBy: {
+      id: "asc"
     }
   });
 }
