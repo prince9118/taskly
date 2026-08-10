@@ -13,7 +13,8 @@ export const TaskSchema = z.object({
   id: z.number(),
   title: z.string(),
   completed: z.boolean().default(false),
-  priority: TaskPrioritySchema
+  priority: TaskPrioritySchema,
+  deletedAt: z.date().optional()
 });
 
 export type CreateTaskInput = {
