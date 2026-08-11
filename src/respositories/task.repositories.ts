@@ -49,3 +49,10 @@ export async function updateTask(
     },
   });
 }
+export async function deleteTask(id: number) {
+  return await prisma.task.delete({
+    where: {
+      id,
+    },
+  });
+}

@@ -28,13 +28,7 @@ export async function taskList(req: Request, res: Response) {
 
 export async function updateTask(req: Request, res: Response) {
   try {
-    console.log("PARAMS:", req.params);
-    console.log("BODY:", req.body);
-
     const id = Number(req.params.id);
-
-    console.log("ID:", id);
-
     const updatedTask = await taskService.updateTask(id, req.body);
 
     return res.status(200).json(updatedTask);
@@ -43,6 +37,21 @@ export async function updateTask(req: Request, res: Response) {
 
     return res.status(500).json({
       message: "Failed to update task",
+    });
+  }
+}
+
+export async function deleteTask(req: Request, res: Response) {
+  try {
+    const taskId = Number(req.params.id);
+    const deleteTask = await taskService.deleteTask(taskId);
+    return res.status(200).json({
+      message: "Task deletd successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Failed to delete task",
     });
   }
 }

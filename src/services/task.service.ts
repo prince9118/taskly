@@ -64,3 +64,8 @@ export async function updateTask(
   const updateTask = await taskRepository.updateTask(id, data);
   return updateTask;
 }
+
+export async function deleteTask(id: number) {
+  const deleteTask = await taskRepository.deleteTask(id);
+  return deleteTask;
+}
